@@ -9,14 +9,7 @@ export class ApiServiceStack extends cdk.Stack {
     const main = new lambda.Function(this, "lambda", {
       runtime: lambda.Runtime.NODEJS_12_X,
       handler: "index.handler",
-      code: lambda.Code.fromInline(' \
-        exports.handler = async function (event) { \
-          return { \
-            statusCode: 200, \
-            headers: { "Content-Type": "application/json" }, \
-            body: JSON.stringify(event), \
-          }; \
-        };')
+      code: lambda.Code.fromAsset("resources")
     });
 
     new apigw.LambdaRestApi(this, 'Endpoint', {

@@ -12,8 +12,15 @@ export class ApiServiceStack extends cdk.Stack {
       code: lambda.Code.fromAsset("resources")
     });
 
-    new apigw.LambdaRestApi(this, 'Endpoint', {
-      handler: main
+    const api = new apigw.LambdaRestApi(this, 'Endpoint', {
+      handler: main,
+      proxy: false
     })
+
+    const root = api.root;
+    root.addMethod('GET')
+
+    const hello = api.root.addResource('hello');
+    hello.addMethod('GET'); 
   }
 }
